@@ -46,28 +46,3 @@ $(document).ready(function () {
 	
 });
 
-
-
-
-  $(document).ready(function(){
-
-
-    // or, equivalently:
-    //
-    // sys.graft({
-    //   nodes:{
-    //     f:{alone:true, mass:.25}
-    //   }, 
-    //   edges:{
-    //     a:{ b:{},
-    //         c:{},
-    //         d:{},
-    //         e:{}
-    //     }
-    //   }
-    // })
-    
-  })
-
-
-

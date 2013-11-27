@@ -2,8 +2,6 @@
 var Facebook = function(view, callback) {
 	this.id = 0;
 	this.login = function() {
-		// login a user and call callback() if successfull
-		// be sure to provide appropriate {scopes: "scopes,go,here"}
 
 		var that = this;
 		FB.login(function(response) {
@@ -33,7 +31,6 @@ var Facebook = function(view, callback) {
 
 	this.init = function() {
 		var that = this;
-		/* provided FB init code, don't need to touch */
 		window.fbAsyncInit = function() {
 	
 			// init the FB JS SDK
