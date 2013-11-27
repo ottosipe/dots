@@ -1,0 +1,53 @@
+
+html {
+	height: 100%;
+}
+
+body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+#spinner {
+	position: fixed;
+	z-index: 1000;
+	top: 50%;
+	left: 50%;
+}
+
+#login_bar {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	z-index: 100;
+}
+
+#user_img {
+	width: 40px;
+}
+
+#stats {
+	position: absolute;
+	bottom: 0px;
+	right: 0px;
+	z-index: 100;
+}
+
+.stat {
+	margin-right: 40px;
+}
+
+.stat img {
+	vertical-align: top;
+	margin-top: 30px;
+	height: 60px;
+}
+
+.jumbo {
+	font-size: 80px;
+}
+
+.unit {
+	font-size: 30px;
+}
