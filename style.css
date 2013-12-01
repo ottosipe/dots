@@ -10,30 +10,30 @@ body {
 }
 
 #search_bar {
-        position: absolute;
-        top: 10px;
-        left: 10px;
-        z-index: 100;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 100;
 }
 
 #search_dropdown {
-        padding: 0px;
-        max-height: 300px;
-        overflow: auto;
+    padding: 0px;
+    max-height: 300px;
+    overflow: auto;
 }
 
 .drop_item {
-        border-bottom: 1px solid #FFF;
-        cursor: pointer;
-        padding: 4px;
+    border-bottom: 1px solid #FFF;
+    cursor: pointer;
+    padding: 4px;
 }
 
 .drop_item:last-child {
-        border-bottom: none;
+    border-bottom: none;
 }
 
 .drop_item:hover {
-        font-weight: bold;
+   font-weight: bold;
 }
 
 #spinner {
@@ -51,10 +51,12 @@ body {
 }
 
 #user_img {
-	width: 40px;
+	width: 36px;
+	border-radius: 5px;
 }
 
 #stats {
+	color: white;
 	position: absolute;
 	bottom: 0px;
 	right: 0px;

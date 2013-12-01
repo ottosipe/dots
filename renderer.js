@@ -1,10 +1,12 @@
 var Colors = function() {
   var idx = 0;
   var colors = [
-    "rgba(0,0,0,0.333)",
-    "rgba(100,0,0,0.333)",
-    "rgba(0,100,0,0.333)",
-    "rgba(0,0,100,0.333)"
+    //"rgba(0,0,0,0.666)",
+    "rgba(242,189,12,0.666)",
+    "rgba(242,106,30,0.666)",
+    "rgba(227,61,99,0.666)",
+    "rgba(164,198,52,0.666)",
+    "rgba(98,163,224,0.666)"
   ]
   this.next = function() {
     idx++;
@@ -59,7 +61,7 @@ var Renderer = function(canvas, view) {
         // which allow you to step through the actual node objects but also pass an
         // x,y point in the screen's coordinate system
         // 
-        ctx.fillStyle = "white";
+        ctx.fillStyle = "#242424";
         ctx.fillRect(0,0, canvas.width, canvas.height);
         
         particleSystem.eachEdge(function(edge, pt1, pt2) {
@@ -81,21 +83,23 @@ var Renderer = function(canvas, view) {
           // pt:   {x:#, y:#}  node position in screen coords
 
           // draw a rectangle centered at pt
-          var w = 5;//Math.log(node.data.n)*4;
+          var w = Math.log(node.data.n)*4;
 
           //ctx.fillRect(pt.x-w/2, pt.y-w/2, w,w);
 
           ctx.beginPath();
           ctx.arc(pt.x, pt.y, w, 0, 2 * Math.PI, false);
-          ctx.fillStyle = "black";
+          ctx.fillStyle = "#242424";
           ctx.fill();
+          ctx.lineWidth = 1;
+          ctx.strokeStyle = "white";
           ctx.stroke();
         });
 
         // draw label
         if(label) {
-          ctx.fillStyle = "orange";
-          ctx.font = "bold 16px Arial";
+          ctx.fillStyle = "white";
+          ctx.font = "16px Arial";
           ctx.fillText(label.data.name, label.x, label.y);
         }
       },
@@ -130,8 +134,8 @@ var Renderer = function(canvas, view) {
             if (dragged && dragged.node !== null){
               // while we're dragging, don't let physics move the node
               dragged.node.fixed = true;
-              console.log(dragged.node.data);
               view.addData(dragged.node.data.id);
+              console.log(dragged);
             }
 
             $(canvas).bind('mousemove', handler.dragged)

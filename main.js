@@ -17,10 +17,13 @@ $(document).ready(function () {
 	this.spinner = new Spinner({radius: 30, length: 30}).spin($("#spinner")[0]);
 	
   this.addData = function(target) {
-    console.log("data: ", target)
-    fb.getPhotoData(target, function(data, my_id) {
-      graph.parseData(data, my_id);
+    fb.getPhotoData(target, function(data) {
+      graph.parseData(data);
     });
+  }
+
+  this.setPeople = function(num) {
+    $("#people").html(num);
   }
 
 	this.showLogin = function() {
@@ -80,6 +83,7 @@ $(document).ready(function () {
 
   $(".clear").click(function() {
     graph.stop();
+    $("#people").html("0");
   })
 
 });

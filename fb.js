@@ -38,7 +38,8 @@ var Facebook = function(view, callback) {
 	this.getPhotoData = function (target, parser) {
 		view.showSpinner();
 		var that = this;
-		FB.api(target+"/photos?fields=tags.fields(id,name),likes.fields(name,id)&limit=50", function(res) {
+		var limit = 60;
+		FB.api(target+"/photos?fields=tags.fields(id,name),likes.fields(name,id)&limit="+limit, function(res) {
 			parser(res.data, that.id);
 			view.hideSpinner();
 		});
