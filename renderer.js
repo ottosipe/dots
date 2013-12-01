@@ -25,7 +25,6 @@ var Renderer = function(canvas, view) {
       canvas.height = document.body.clientHeight;
     }
     setSize();
-    $(window).resize(setSize);
     // TODO: handle screen size change
     var ctx = canvas.getContext("2d");
     var particleSystem;
