@@ -9,6 +9,33 @@ body {
 	padding: 0;
 }
 
+#search_bar {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        z-index: 100;
+}
+
+#search_dropdown {
+        padding: 0px;
+        max-height: 300px;
+        overflow: auto;
+}
+
+.drop_item {
+        border-bottom: 1px solid #FFF;
+        cursor: pointer;
+        padding: 4px;
+}
+
+.drop_item:last-child {
+        border-bottom: none;
+}
+
+.drop_item:hover {
+        font-weight: bold;
+}
+
 #spinner {
 	position: fixed;
 	z-index: 1000;

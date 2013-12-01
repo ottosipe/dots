@@ -9,6 +9,16 @@
 
 	<body>
 		<div id="fb-root"></div>
+		<div id="search_bar">
+                <form id="search_form" class="form-inline" role="form">
+                        <div class="form-group">
+                                <input type="text" class="form-control" id="user" placeholder="Search a Name" autocomplete="off">
+                        </div>
+                        <button type="reset" class="clear btn btn-default">Clear</button>
+                        <div id="search_dropdown" class="well hide">
+                        </div>
+                </form>
+        </div>
 
 		<div id="login_bar">
 
@@ -19,8 +29,8 @@
 
 		<div id="stats">
 			<span class="stat">
-				<span id="miles_traveled" class="jumbo">0</span>
-				<span class="unit">unit</span>
+				<span id="people" class="jumbo">0</span>
+				<span class="unit">people</span>
 			</span>
 		</div>
 
@@ -32,10 +42,10 @@
 		<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/spin.js/1.2.4/spin.min.js"></script>
 		<script src="arbor.js"></script>
-		<script src="arbor-tween.js"></script>
 		<script src="renderer.js" type="text/javascript"></script>
 		<script src="graph.js" type="text/javascript"></script>
 		<script src="fb.js" type="text/javascript"></script>
+		<script src="typeahead.js" type="text/javascript"></script>
 		<script src="main.js" type="text/javascript"></script>
 		
 	</body>

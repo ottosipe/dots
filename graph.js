@@ -1,12 +1,19 @@
 
-var Graph = function() {
+var Graph = function(view) {
 
 	var graph = {};
-	var sys = arbor.ParticleSystem(100, 50, 0.2) // create the system with sensible repulsion/stiffness/friction
-	//sys.parameters({gravity:true}) // use center-gravity to make the graph settle nicely (ymmv)
-	sys.renderer = Renderer("#viewport") // our newly created renderer will have its .init() method called shortly by sys...
+	var sys = arbor.ParticleSystem(100, 50, 0.2); // create the system with sensible repulsion/stiffness/friction
+	sys.parameters({gravity:true}); // use center-gravity to make the graph settle nicely (ymmv)
+	sys.renderer = Renderer("#viewport", view); // our newly created renderer will have its .init() method called shortly by sys...
 
-	// move this outa here
+	this.stop = function() {
+		sys.stop();
+		sys.eachNode(function(node, pt){ 
+			sys.pruneNode(node);
+		});
+		graph = {};
+	}
+
 	this.parseData = function(photos, my_id) {
 		for (var i in photos) {
 			try {
@@ -16,9 +23,11 @@ var Graph = function() {
 			} catch (err) {}
 		}
 		this.render();
+		colors.next(); // move to next color
 	}
 
 	this.permute = function (tags, my_id) {
+		my_id = 0;
 		for (var j = 0; j < tags.length; ++j) {
 			var p1 = tags[j];
 			if(!p1.id || p1.id == my_id ) continue;
@@ -47,37 +56,23 @@ var Graph = function() {
 
 	this.addNode = function(id) {
 		if(sys.getNode(id)) return;
-
 		var person = graph[id];
 		sys.addNode(id, {
 			n: person.n,
+			id: id,
 			name: person.name
 		});
 	}
 
 	this.render = function() {
-		console.log(graph)
-
-		var arr = [];
 		for (var i in graph) {
 			var person = graph[i];
+			//if(person.n < 5) continue;
+			this.addNode(i);
 			for (var j in person.links) {
-				arr.push({a:i, b:j});
+				this.addNode(j);
+				sys.addEdge(i, j, {color: colors.get()});
 			}
 		}
-
-		var that = this;
-		var intv = setInterval(function() {
-			if(arr.length) {
-				var edge = arr.pop();
-				that.addNode(edge.a);
-				that.addNode(edge.b);
-				sys.addEdge(edge.a, edge.b);
-			} else {
-				console.log("done")
-				clearInterval(intv);
-			}
-		}, 50);
-
 	}
 }

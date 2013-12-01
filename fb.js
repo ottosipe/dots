@@ -19,11 +19,26 @@ var Facebook = function(view, callback) {
 		FB.logout();
 		view.showLogin();
 	}
+	
+	this.getFriends = function(cb) {
+		// return a list of the user and user's friends as 
+		// an argument to cb, be sure to add the logged 
+		// in fb user too! 
+		// returns somethin like cb([{name:"",id:""},...]);
+		var that = this;
+		FB.api('/me', function(me) {
+			FB.api('/me/friends', function(response) {
+				console.log(me);
+				response.data.push(me);
+				cb(response.data);
+			});
+		});
+	}
 
-	this.getPhotoData = function (parser) {
+	this.getPhotoData = function (target, parser) {
 		view.showSpinner();
 		var that = this;
-		FB.api("me/photos?fields=tags.fields(id,name),likes.fields(name,id)&limit=300", function(res) {
+		FB.api(target+"/photos?fields=tags.fields(id,name),likes.fields(name,id)&limit=50", function(res) {
 			parser(res.data, that.id);
 			view.hideSpinner();
 		});

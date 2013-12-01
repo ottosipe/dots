@@ -1,10 +1,33 @@
-var Renderer = function(canvas) {
+var Colors = function() {
+  var idx = 0;
+  var colors = [
+    "rgba(0,0,0,0.333)",
+    "rgba(100,0,0,0.333)",
+    "rgba(0,100,0,0.333)",
+    "rgba(0,0,100,0.333)"
+  ]
+  this.next = function() {
+    idx++;
+    if (idx == colors.length) idx = 0;
+  }
+  this.get = function() {
+    return colors[idx];
+  }
+}
+var colors = new Colors;
+
+var Renderer = function(canvas, view) {
     var canvas = $(canvas).get(0);
-    canvas.width = document.body.clientWidth; //document.width is obsolete
-    canvas.height = document.body.clientHeight; //document.height is obsolete
+    function setSize() {
+      canvas.width = document.body.clientWidth;
+      canvas.height = document.body.clientHeight;
+    }
+    setSize();
+    $(window).resize(setSize);
     // TODO: handle screen size change
     var ctx = canvas.getContext("2d");
     var particleSystem;
+    var label = null;
 
     var that = {
       init:function(system) {
@@ -45,7 +68,7 @@ var Renderer = function(canvas) {
           // pt2:  {x:#, y:#}  target position in screen coords
 
           // draw a line from pt1 to pt2
-          ctx.strokeStyle = "rgba(0,0,0, .333)";
+          ctx.strokeStyle = edge.data.color;
           ctx.lineWidth = 1;
           ctx.beginPath();
           ctx.moveTo(pt1.x, pt1.y);
@@ -58,11 +81,23 @@ var Renderer = function(canvas) {
           // pt:   {x:#, y:#}  node position in screen coords
 
           // draw a rectangle centered at pt
-          var w = 10;//Math.log(node.data.n)*4;
+          var w = 5;//Math.log(node.data.n)*4;
+
+          //ctx.fillRect(pt.x-w/2, pt.y-w/2, w,w);
+
+          ctx.beginPath();
+          ctx.arc(pt.x, pt.y, w, 0, 2 * Math.PI, false);
           ctx.fillStyle = "black";
-          ctx.fillRect(pt.x-w/2, pt.y-w/2, w,w);
-          //arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
-        })                            
+          ctx.fill();
+          ctx.stroke();
+        });
+
+        // draw label
+        if(label) {
+          ctx.fillStyle = "orange";
+          ctx.font = "bold 16px Arial";
+          ctx.fillText(label.data.name, label.x, label.y);
+        }
       },
       
       initMouseHandling: function(){
@@ -72,6 +107,21 @@ var Renderer = function(canvas) {
         // set up a handler object that will initially listen for mousedowns then
         // for moves and mouseups while dragging
         var handler = {
+          moved:function(e){
+            var pos = $(canvas).offset();
+            _mouseP = arbor.Point(e.pageX-pos.left, e.pageY-pos.top);
+            near = particleSystem.nearest(_mouseP);
+
+            if (near && near.node !== null && near.distance < 10){
+              label = {
+                data: near.node.data,
+                x: _mouseP.x,
+                y: _mouseP.y
+              }
+            } else {
+              label = null;
+            }
+          },
           clicked:function(e){
             var pos = $(canvas).offset();
             _mouseP = arbor.Point(e.pageX-pos.left, e.pageY-pos.top)
@@ -79,8 +129,9 @@ var Renderer = function(canvas) {
 
             if (dragged && dragged.node !== null){
               // while we're dragging, don't let physics move the node
-              dragged.node.fixed = true
+              dragged.node.fixed = true;
               console.log(dragged.node.data);
+              view.addData(dragged.node.data.id);
             }
 
             $(canvas).bind('mousemove', handler.dragged)
@@ -114,6 +165,7 @@ var Renderer = function(canvas) {
         
         // start listening
         $(canvas).mousedown(handler.clicked);
+        $(canvas).bind('mousemove', handler.moved);
 
       },
     }
