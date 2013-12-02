@@ -32,9 +32,13 @@ h1 {
 	font-weight: 100;
 }
 
+#login_view .well {
+	padding-top: 0px;
+}
+
 .info_view {
 	margin: 5% auto;
-	width: 600px;
+	width: 500px;
 	text-align: center;
 }
 
