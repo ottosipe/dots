@@ -134,7 +134,6 @@ var Renderer = function(canvas, view) {
               // while we're dragging, don't let physics move the node
               dragged.node.fixed = true;
               view.addData(dragged.node.data);
-              console.log(dragged);
             }
 
             $(canvas).bind('mousemove', handler.dragged)
