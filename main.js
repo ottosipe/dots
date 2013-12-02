@@ -27,7 +27,6 @@ $(document).ready(function () {
     });
 	}, function() {
     // called on bad login
-    console.log('test');
     view.showLoginView();
   });
 
