@@ -130,10 +130,10 @@ var Renderer = function(canvas, view) {
             _mouseP = arbor.Point(e.pageX-pos.left, e.pageY-pos.top)
             dragged = particleSystem.nearest(_mouseP);
 
-            if (dragged && dragged.node !== null){
+            if (dragged && dragged.node !== null && dragged.distance < 10){
               // while we're dragging, don't let physics move the node
               dragged.node.fixed = true;
-              view.addData(dragged.node.data.id);
+              view.addData(dragged.node.data);
               console.log(dragged);
             }
 

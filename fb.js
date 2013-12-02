@@ -1,5 +1,5 @@
 
-var Facebook = function(view, callback) {
+var Facebook = function(view, callback, fail) {
 	this.id = 0;
 	this.login = function() {
 
@@ -8,6 +8,8 @@ var Facebook = function(view, callback) {
 			if (response.authResponse) {
 				this.id = response.authResponse.userID;
 				callback(this.id);
+			} else {
+				fail();
 			}
 		},{
 			scope: 'friends_location,user_location,friends_photos,user_photos,user_status,friends_status'
@@ -21,14 +23,10 @@ var Facebook = function(view, callback) {
 	}
 	
 	this.getFriends = function(cb) {
-		// return a list of the user and user's friends as 
-		// an argument to cb, be sure to add the logged 
-		// in fb user too! 
-		// returns somethin like cb([{name:"",id:""},...]);
 		var that = this;
 		FB.api('/me', function(me) {
+			that.me = me;
 			FB.api('/me/friends', function(response) {
-				console.log(me);
 				response.data.push(me);
 				cb(response.data);
 			});
@@ -62,11 +60,8 @@ var Facebook = function(view, callback) {
 					// the user is logged in and has authenticated
 					that.id = response.authResponse.userID;
 					callback(that.id);
-				} else if (response.status === 'not_authorized') {
-					// the user is logged in to Facebook, 
-					// but has not authenticated your app
 				} else {
-					// the user isn't logged in to Facebook.
+					fail();
 				}
 			});
 		};

@@ -1,25 +1,69 @@
 
 $(document).ready(function () {
 
+  var meny = Meny.create({
+    menuElement: $('.toolbar').get(0),
+    contentsElement: $('.contents').get(0),
+    position: 'top',
+    height: 55,
+    width: 300,
+    mouse: true,
+    touch: true
+  });
+
+  // remove odd render bug...
+  $(".toolbar").removeClass("hide");
+
 	var view = this;
 	var graph = new Graph(this);
   var typeahead = new Typeahead();
 	var fb = new Facebook(this, function(id) {
 		// called on successful login
+    view.showMainView();
 		view.showLogout(id);
-    view.addData("me");
+    view.addData({id:"me", name:"me"});
     fb.getFriends(function(data){
       typeahead.setDataList(data);
     });
-	});
+	}, function() {
+    // called on bad login
+    console.log('test');
+    view.showLoginView();
+  });
 
-	// create our spinner
-	this.spinner = new Spinner({radius: 30, length: 30}).spin($("#spinner")[0]);
+	// create the spinner
+	this.spinner = new Spinner({radius: 30, length: 30, color: '#FFF'}).spin($("#spinner")[0]);
 	
   this.addData = function(target) {
-    fb.getPhotoData(target, function(data) {
+    fb.getPhotoData(target.id, function(data) {
+      if(data.length == 0) return;
+      $('<div/>', {
+        class: "drop_item",
+        text: target.name,
+        style: "border-color:"+colors.get()+";"
+      }).appendTo("#ongraph");
       graph.parseData(data);
     });
+  }
+
+  this.showMainView = function() {
+    $(".view").addClass("hide");
+    $("#main_view").removeClass("hide");
+  }
+
+  this.showLoginView = function() {
+    $(".view").addClass("hide");
+    $("#login_view").removeClass("hide");
+  }
+
+  $(".about").click(function() {
+    view.showAboutView();
+  });
+  this.showAboutView = function() {
+    $("#about_view").removeClass("hide");
+    $("#about_view .close").click(function(){
+      view.showMainView();
+    })
   }
 
   this.setPeople = function(num) {
@@ -53,7 +97,17 @@ $(document).ready(function () {
 
 	$(".logout").click(function() {
 		fb.logout();
+    graph.stop();
+    $("#ongraph").empty();
+    $("#people").html("0");
 	});
+
+  $("#search_form").submit(function(e) {
+    e.preventDefault();
+    var $first = $(".drop_item").first();
+    $first.trigger("click");
+    $("#search_dropdown").empty();
+  })
 
   $("#user").on("keyup", function() {
 
@@ -72,8 +126,11 @@ $(document).ready(function () {
         })
         .appendTo("#search_dropdown")
         .click(function() {
-          $("#user").val($(this).html());
-          view.addData($(this).data("id"));
+          $("#user").val("");
+          view.addData({
+            id: $(this).data("id"),
+            name: $(this).html()
+          });
           $("#search_dropdown").empty();
           $("#search_dropdown").addClass("hide");
         });
@@ -84,7 +141,9 @@ $(document).ready(function () {
   $(".clear").click(function() {
     graph.stop();
     $("#people").html("0");
-  })
+    $("#ongraph").empty();
+  });
 
 });
+
 

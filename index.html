@@ -3,44 +3,101 @@
 	<head>
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 		<title>Dots - By Otto</title>
-		<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.0/css/bootstrap.min.css" type="text/css" />
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.0/css/bootstrap.min.css" type="text/css" />
 		<link rel="stylesheet" href="style.css" type="text/css" />
 	</head>
 
 	<body>
 		<div id="fb-root"></div>
-		<div id="search_bar">
-                <form id="search_form" class="form-inline" role="form">
-                        <div class="form-group">
-                                <input type="text" class="form-control" id="user" placeholder="Add Friend ..." autocomplete="off">
-                        </div>
-                        <button type="reset" class="clear btn btn-default">Clear</button>
-                        <div id="search_dropdown" class="well hide">
-                        </div>
-                </form>
-        </div>
 
-		<div id="login_bar">
-
-			<img id="user_img" src="">
-			<input type="button" class="login btn btn-default" value="login">
-			<input type="button" class="logout btn btn-default hide" value="logout">
+		<div id="login_view" class="info_view view hide">
+			<img src="example_1.png">
+			<div class="well">
+				<p>
+					When using this site, you must first login via Facebook - it simply scrapes data, nothing more. Upon logging in you should see a visualization of your own photo tags, like the one above. You can click on any single node to add all of the photo data for that friend. Enjoy.
+				</p>
+				
+			</div>
+			<input type="button" class="login btn btn-default" value="Login With Facebook To Get Started">
 		</div>
 
-		<div id="stats">
-			<span class="stat">
-				<span id="people" class="jumbo">0</span>
-				<span class="unit">people</span>
-			</span>
+		<div id="about_view" class="info_view view hide well">
+
+			<button class="close">&times;</button>
+			<h1>Dots</h1>
+			<p>
+				When I set out to build Dots I was inspired to show a spatial relationship between groups of people. I realized quickly that social networks like Facebook are very densely connected - many of these "friendships" appear meaningless when visualized on an overcrowded graph. My intuition was to narrow down the scope of the interactions I chose. I wanted to show the user a graph which is more representative of reality than their idle social network connections. For these reasons, I chose to show the user a snapshot of who their last few photos were taken with. Although there are some exceptions, most photo tags on Facebook are representative of a genuine moment, some real connection between people. I do not assume that the data I collect displays the full view of one's personal relationships, but it's a start.
+			</p><p>
+				My inspiration for this site was in part an ascetic one. I wanted to treat Dots as an opportunity to express my creativity, especially in a medium not readily know for it - code. I hope that it is intriguing to a user from an artistic perspective and from a scientific or practical one.
+			</p>
+			<h2><img src="example_2.png"></h2>
+			<p>
+				This site is certainly very dynamic. The nodes and edges act as a system of masses and springs. The dots will shift and wiggle as new data is added, it's quite cool to watch. Larger dots (people with more photo tags) will gravitate towards other larger influences. A simulation of basic physics is both practical for this application and visually stunning. The nodes seem to orbit each other and almost feel like stars in a constellation.
+			</p><h2><img src="example_3.png"></h2><p>
+				No two users will see the same patterns of data, because it's inherently personal - like a social signature. I encourage you to explore interesting relationships to those who you are close with, or those who you are not. I was surprised to see obvious social groupings in my own data and I even found a few non-obvious connections I shared with others. Compare yourself to best friends, roommates, siblings, or significant other.
+			</p><p>
+				I plan to add additional features to this visualization as this is just the beginning. Allowing the user to zoom, pan, and prune groups of nodes is a priority. After that I'd like to allow a user to save their data or even share a link so their friends can take a look.
+			</p><p>
+				Finally, I wanted to be sure to thank those who worked hard on the open source libraries I used to construct this visualization.
+				I used <a href="http://arborjs.org" target="_blank">Arbor.js</a> for particle system simulations and <a href="http://lab.hakim.se/meny" target="_blank">Meny</a> for the 3D menu animations.
+			</p><p>
+				I also encourage anyone to take a look an my own <a href="http://github.com/ottosipe/dots" target="_blank">code on GitHub</a>.
+			</p><p>
+				- Otto
+			</p>
 		</div>
 
-		<div id="spinner" class="hide">
+		<div id="main_view" class="hide view hide">
+	  		<div class="back">
+	  			<h1>Dots</h1>
+	  		</div>
+
+			<div class="toolbar hide">
+	                
+				<div class="pull-right"> 
+					<input type="button" class="about btn" value="About Dots">
+			  		<input type="button" class="login btn" value="Login With Facebook">
+					<input type="button" class="logout btn hide" value="Logout">
+					<img id="user_img" src="">
+				</div>
+				<form id="search_form" class="form-inline" role="form">
+					<button type="reset" class="clear btn">Clear Graph</button>
+
+	                <div class="form-group">
+	                    <input type="text" class="form-control" id="user" placeholder="Add Friend ..." autocomplete="off">
+	                </div>
+	                
+	                <span id="search_dropdown" class="hide">
+	                </span>
+	            </form>
+			</div>
+			<div class="meny-arrow"></div>
+	  		<div class="contents">
+				
+	  			
+					<div id="stats">
+					<span class="stat">
+						
+					<div id="ongraph"></div>
+					</span>
+						<span class="stat">
+							<span id="people" class="jumbo">0</span>
+							<span class="unit">people</span>
+						</span>
+					</div>
+
+
+					<div id="spinner" class="hide">
+					</div>
+
+					<canvas id="viewport" width="100%" height="100%"></canvas>
+			</div>
+
 		</div>
-
-		<canvas id="viewport" width="100%" height="100%"></canvas>
-
 		<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/spin.js/1.2.4/spin.min.js"></script>
+		<!--<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.0/js/bootstrap.min.js" type="text/javascript"></script>-->
+		<script src="meny.min.js" type="text/javascript"></script>
 		<script src="arbor.js"></script>
 		<script src="renderer.js" type="text/javascript"></script>
 		<script src="graph.js" type="text/javascript"></script>

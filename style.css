@@ -4,33 +4,106 @@ html, body {
 	margin: 0;
 	padding: 0;
 	overflow: hidden;
+	background: #333;
+	min-height: 500px;
+	min-width: 1000px;
+	color: white;
 }
 
-#search_bar {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    z-index: 100;
+.well {
+	color: black;
+	border-radius: 0px;
+	background: rgba(256,256,256,.9);
+}
+
+.btn {
+	border-radius: 0px;
+}
+
+.back {
+	position: absolute;
+	bottom: 15px;
+	z-index: -100;
+	width: 100%;
+	text-align: center;
+}
+
+h1 {
+	font-weight: 100;
+}
+
+.info_view {
+	margin: 5% auto;
+	width: 600px;
+	text-align: center;
+}
+
+.info_view img {
+	width: 100%;
+	margin: 0px;
+}
+
+.info_view p {
+	text-align: left;
+}
+
+#about_view {
+	position: fixed;
+	width: 60%;
+	height: 70%;
+	overflow: auto;
+	margin: 20%;
+	margin-top: 100px;
+	margin-bottom: 0px;
+	z-index: 1000;
+}
+
+#about_view img {
+	width: 60%;
+	text-align: center;
+	display: inline-block;
+}
+
+.toolbar {
+    padding: 10px;
+}
+
+#user {
+	border-radius: 0px;
+	background: none;
+	color: white;
+}
+
+.btn {
+	background: none;
+	border: 1px solid white;
+	color: white;
+}
+.btn:hover {
+	color: white;
+	border: 1px solid gray;
+	background: none;
 }
 
 #search_dropdown {
-    padding: 0px;
-    max-height: 300px;
-    overflow: auto;
+	max-width: 80%;
+	color: white;
+	overflow: hidden;
+	text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: middle;
 }
 
 .drop_item {
-    border-bottom: 1px solid #FFF;
     cursor: pointer;
-    padding: 4px;
-}
-
-.drop_item:last-child {
-    border-bottom: none;
+    padding: 5px;
+    margin-right: 5px;
+    border: 1px solid white;
+    display: inline-block;
 }
 
 .drop_item:hover {
-   font-weight: bold;
+	border-color: orange;
 }
 
 #spinner {
@@ -40,16 +113,22 @@ html, body {
 	left: 50%;
 }
 
-#login_bar {
-	position: absolute;
-	top: 10px;
-	right: 10px;
-	z-index: 100;
-}
 
 #user_img {
-	width: 36px;
-	border-radius: 5px;
+	height: 34px;
+}
+
+#ongraph {
+	position: fixed;
+	bottom: 20px;
+	left: 20px;
+	max-width: 80%;
+	color: white;
+	overflow: hidden;
+	text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: middle;
+	z-index: 200;
 }
 
 #stats {
@@ -61,19 +140,59 @@ html, body {
 }
 
 .stat {
-	margin-right: 40px;
-}
-
-.stat img {
-	vertical-align: top;
-	margin-top: 30px;
-	height: 60px;
+	margin-right: 20px;
 }
 
 .jumbo {
-	font-size: 80px;
+	font-size: 60px;
 }
 
 .unit {
 	font-size: 30px;
+}
+
+
+.meny-arrow {
+        position: absolute;
+        z-index: 10;
+        border: 10px solid transparent;
+
+        -webkit-transition: opacity 0.4s ease 0.4s;
+           -moz-transition: opacity 0.4s ease 0.4s;
+            -ms-transition: opacity 0.4s ease 0.4s;
+             -o-transition: opacity 0.4s ease 0.4s;
+                transition: opacity 0.4s ease 0.4s;
+}
+.meny-left .meny-arrow {
+        left: 14px;
+        top: 50%;
+        margin-top: -16px;
+        border-left: 16px solid #444;
+}
+.meny-right .meny-arrow {
+        right: 14px;
+        top: 50%;
+        margin-top: -16px;
+        border-right: 16px solid #444;
+}
+.meny-top .meny-arrow {
+        left: 50%;
+        top: 14px;
+        margin-left: -16px;
+        border-top: 16px solid #444;
+}
+.meny-bottom .meny-arrow {
+        left: 50%;
+        bottom: 14px;
+        margin-left: -16px;
+        border-bottom: 16px solid #444;
+}
+.meny-active .meny-arrow {
+        opacity: 0;
+
+        -webkit-transition: opacity 0.2s ease;
+           -moz-transition: opacity 0.2s ease;
+            -ms-transition: opacity 0.2s ease;
+             -o-transition: opacity 0.2s ease;
+                transition: opacity 0.2s ease;
 }

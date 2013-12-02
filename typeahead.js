@@ -37,6 +37,8 @@ var Typeahead = function Typeahead() {
 					}
 				}
 				if(gate) sublist.push(this.list[i]);
+				// only show 4 results
+				if(sublist.length >= 4) break;
 			}
 		}
 		// pass the sublist back to the 
